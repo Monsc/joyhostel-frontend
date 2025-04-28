@@ -7,7 +7,7 @@ const roomId = 'dorm8';
 // 初始化日历
 async function loadCalendar() {
   try {
-    const res = await fetch(`${API_BASE_URL}/calendar/${roomId}`);
+    const res = await fetch(`${API_BASE_URL}/api/calendar/${roomId}`);
     const dates = await res.json();
 
     const calendarDiv = document.getElementById('calendar');
@@ -73,3 +73,5 @@ async function submitBooking(bookingData) {
 window.onload = () => {
   loadCalendar();
 };
+
+// 监听刷新按钮
