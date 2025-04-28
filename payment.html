@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Joy Hostel - 支付页面</title>
+  <link rel="stylesheet" href="assets/style.css" />
+
+  <!-- SEO -->
+  <meta name="description" content="Joy Hostel官方收款页面，支持Stripe安全支付，欢迎数字游民和旅行者入住。" />
+  <meta name="keywords" content="Joy Hostel支付, Stripe付款, 数字游民, 萨拉热窝住宿" />
+</head>
+<body>
+
+<!-- 顶部悬浮导航栏 -->
+<div class="navbar">
+  <div class="nav-links">
+    <a href="index.html" class="nav-link" data-zh="首页" data-en="Home">Home</a>
+    <a href="booking.html" class="nav-link" data-zh="预订" data-en="Booking">Booking</a>
+    <a href="payment.html" class="nav-link" data-zh="支付" data-en="Payment">Payment</a>
+    <a href="contact.html" class="nav-link" data-zh="联系我们" data-en="Contact">Contact</a>
+  </div>
+</div>
+
+<div class="container fade-in">
+  <h1 class="text" data-zh="Joy Hostel 收款页面" data-en="Joy Hostel Payment Page">Joy Hostel Payment Page</h1>
+
+  <div class="room">
+    <h3 class="text" data-zh="混住八人间 - €10" data-en="8-Bed Dorm - €10">8-Bed Dorm - €10</h3>
+    <button class="text" data-zh="立即付款" data-en="Pay Now" onclick="pay('price_1RCuJvFz3cR3lvSRhH4RQgSV')">Pay Now</button>
+  </div>
+
+  <div class="room">
+    <h3 class="text" data-zh="混住四人间 - €12" data-en="4-Bed Dorm - €12">4-Bed Dorm - €12</h3>
+    <button class="text" data-zh="立即付款" data-en="Pay Now" onclick="pay('price_1RCuJOFz3cR3lvSR84VUt8Fp')">Pay Now</button>
+  </div>
+
+  <div class="room">
+    <h3 class="text" data-zh="女生三人间 - €14" data-en="Female Triple Room - €14">Female Triple Room - €14</h3>
+    <button class="text" data-zh="立即付款" data-en="Pay Now" onclick="pay('price_1RCuIdFz3cR3lvSRNEzOSSED')">Pay Now</button>
+  </div>
+
+  <div class="room">
+    <h3 class="text" data-zh="三人间 - €14" data-en="Triple Room - €14">Triple Room - €14</h3>
+    <button class="text" data-zh="立即付款" data-en="Pay Now" onclick="pay('price_1RCuUUFz3cR3lvSRpmk81S74')">Pay Now</button>
+  </div>
+
+  <div class="room">
+    <h3 class="text" data-zh="自定义金额 (€)" data-en="Custom Amount Payment (€)">Custom Amount Payment (€)</h3>
+    <input type="number" id="customAmount" class="text" data-zh-placeholder="输入金额" data-en-placeholder="Enter amount" placeholder="Enter amount" />
+    <button class="text" data-zh="付款" data-en="Pay" onclick="payCustom()">Pay</button>
+  </div>
+</div>
+
+<!-- 底部页脚 -->
+<div class="footer fade-in">
+  Joy Hostel V1.0.1 Powered by Freedom & Wi-Fi
+</div>
+
+<!-- Stripe & 自适应语言JS -->
+<script src="https://js.stripe.com/v3/"></script>
+<script src="assets/lang.js"></script>
+
+<script>
+const stripe = Stripe("pk_live_51RCtrgFz3cR3lvSRIH0KlHQv00syL5H6LOCBEYd1hBwZ48gBge2Z49XOdFr755QJRAiiyfAMttkgtgPm0zO8ivuR00G2x9TPTV");
+const apiBase = "https://api.joy-hostel.com";  // 正确的后端API地址
+
+function handleResponse(data) {
+  if (data.id && /^[\x00-\xFF]*$/.test(data.id)) {
+    stripe.redirectToCheckout({ sessionId: data.id });
+  } else if (data.error) {
+    alert(window.__lang === "zh" ? "❌ 支付请求错误：" + data.error : "❌ Payment error: " + data.error);
+  } else {
+    alert(window.__lang === "zh" ? "❌ 无法创建支付请求，请稍后再试。" : "❌ Failed to create payment session.");
+  }
+}
+
+function pay(priceId) {
+  if (!priceId) {
+    alert(window.__lang === "zh" ? "缺少房型价格ID！" : "Missing price ID!");
+    return;
+  }
+  fetch(`${apiBase}/api/checkout`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ priceId })
+  })
+  .then(res => res.json())
+  .then(handleResponse)
+  .catch(() => {
+    alert(window.__lang === "zh" ? "❌ 支付请求失败，请检查网络。" : "❌ Payment failed. Check your network.");
+  });
+}
+
+function payCustom() {
+  const amountInput = document.getElementById("customAmount").value;
+  const amount = parseInt(amountInput);
+  if (isNaN(amount) || amount <= 0) {
+    alert(window.__lang === "zh" ? "请输入有效的付款金额！" : "Please enter a valid payment amount!");
+    return;
+  }
+
+  fetch(`${apiBase}/api/checkout`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ customAmount: amount })
+  })
+  .then(res => res.json())
+  .then(handleResponse)
+  .catch(() => {
+    alert(window.__lang === "zh" ? "❌ 支付请求失败，请检查网络。" : "❌ Payment failed. Check your network.");
+  });
+}
+</script>
+
+</body>
+</html>

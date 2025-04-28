@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-zh="Joy Hostel - 数字游民友好型青旅" data-en="Joy Hostel - Digital Nomad Friendly Hostel">Joy Hostel - Digital Nomad Friendly Hostel</title>
+
+  <meta name="description" content="Joy Hostel 是萨拉热窝中心舒适温暖的数字游民友好型青旅，高速WiFi，友好社区，理想远程办公环境。" />
+  <meta name="author" content="Joy Hostel" />
+  <meta property="og:image" content="https://img.joyhostel.net/lobby.jpg" />
+  <meta property="og:url" content="https://joyhostel.net" />
+
+  <link rel="stylesheet" href="assets/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+</head>
+
+<body>
+
+<header class="navbar fade-in">
+  <nav class="nav-links">
+    <a href="index.html" class="nav-link" data-zh="首页" data-en="Home">Home</a>
+    <a href="booking.html" class="nav-link" data-zh="预订" data-en="Booking">Booking</a>
+    <a href="payment.html" class="nav-link" data-zh="支付" data-en="Payment">Payment</a>
+    <a href="contact.html" class="nav-link" data-zh="联系我们" data-en="Contact">Contact</a>
+  </nav>
+</header>
+
+<main class="container fade-in">
+  <h1 class="headline" data-zh="欢迎来到 Joy Hostel" data-en="Welcome to Joy Hostel">Welcome to Joy Hostel</h1>
+  <p class="subhead" data-zh="萨拉热窝中心舒适温暖的数字游民友好型青年旅舍。" data-en="A cozy and warm hostel located in the heart of Sarajevo.">A cozy and warm hostel located in the heart of Sarajevo.</p>
+
+  <div class="swiper gallery-swiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <img src="https://img.joyhostel.net/lobby.jpg" alt="Lobby">
+      </div>
+      <div class="swiper-slide">
+        <img src="https://img.joyhostel.net/room.jpg" alt="Room">
+      </div>
+      <div class="swiper-slide">
+        <img src="https://img.joyhostel.net/kitchen.jpg" alt="Kitchen">
+      </div>
+    </div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-pagination"></div>
+  </div>
+
+  <ul class="features">
+    <li data-zh="中心位置，步行可达所有景点" data-en="Central location, walking distance to all sights">Central location, walking distance to all sights</li>
+    <li data-zh="免费Wi-Fi与舒适的床铺" data-en="Free Wi-Fi and comfy beds">Free Wi-Fi and comfy beds</li>
+    <li data-zh="友好的国际社群" data-en="Friendly international community">Friendly international community</li>
+    <li data-zh="可选早餐与共享厨房" data-en="Breakfast options and shared kitchen">Breakfast options and shared kitchen</li>
+  </ul>
+</main>
+
+<footer class="footer fade-in">
+  Joy Hostel V1.0.1 Powered by Freedom & Wi-Fi
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+  const swiper = new Swiper('.gallery-swiper', {
+    loop: true,
+    autoplay: {
+      delay: 4000,
+      disableOnInteraction: false,
+    },
+    effect: 'fade',
+    fadeEffect: { crossFade: true },
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+  });
+
+  // 浏览器语言检测自动切换
+  document.addEventListener('DOMContentLoaded', function() {
+    const userLang = navigator.language || navigator.userLanguage;
+    const isZh = userLang.startsWith('zh');
+    document.querySelectorAll('[data-zh]').forEach(el => {
+      el.textContent = isZh ? el.getAttribute('data-zh') : el.getAttribute('data-en');
+    });
+    // 同时改 title
+    document.title = isZh 
+      ? document.querySelector('title').getAttribute('data-zh') 
+      : document.querySelector('title').getAttribute('data-en');
+  });
+</script>
+
+</body>
+</html>

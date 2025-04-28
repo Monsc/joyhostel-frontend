@@ -1,0 +1,52 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  margin: 0;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  background: #fafafa;
+  color: #333;
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+.navbar {
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  padding: 15px 0;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-links .nav-link {
+  margin: 0 20px;
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.nav-links .nav-link:hover {
+  color: #007BFF;
+}
+
+.container {
+  padding: 40px 20px;
+  max-width: 960px;
+  margin: 0 auto;
+
+  /* === 房态日历 样式 === */
+#calendar {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 10px;
+  padding: 20px;
+}
+
+.date-cell {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 16px;
+}
