@@ -1,5 +1,5 @@
 // 设置后端API地址
-const API_BASE_URL = 'http://localhost:10000/api';
+const API_BASE_URL = 'https://joyhostel-backend.onrender.com';
 
 // 指定房型ID，比如 dorm8 或 private3
 const roomId = 'dorm8';
